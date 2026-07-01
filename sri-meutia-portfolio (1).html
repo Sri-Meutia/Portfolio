@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sri Meutia Ningsih — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#e7e8ea;
+    --panel:#fcfcfd;
+    --ink:#101d33;
+    --ink-soft:#5a6472;
+    --line:#d1d4d9;
+    --teal:#16324f;
+    --teal-soft:#e7ecf1;
+    --amber:#a9832c;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(16,29,51,0.06) 1px, transparent 0);
+    background-size:22px 22px;
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:var(--teal);}
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:56px 20px 80px;
+  }
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-bottom:34px;
+  }
+  .masthead .kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal);
+    font-weight:600;
+  }
+  h1.name{
+    font-family:'Fraunces', serif;
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-size:clamp(34px,6vw,52px);
+    margin:4px 0 0;
+    letter-spacing:-0.01em;
+  }
+  .masthead-right{
+    text-align:right;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    line-height:1.8;
+  }
+  .masthead-right a{color:var(--ink-soft); text-decoration:none; border-bottom:1px solid var(--line);}
+  .masthead-right a:hover{color:var(--teal); border-color:var(--teal);}
+
+  /* ---------- tabs ("folder index") ---------- */
+  .tablist{
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    padding:0 4px;
+    scrollbar-width:none;
+  }
+  .tablist::-webkit-scrollbar{display:none;}
+  .tab{
+    flex:0 0 auto;
+    appearance:none;
+    border:1px solid var(--line);
+    border-bottom:none;
+    background:#d5d7db;
+    color:var(--ink-soft);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:.03em;
+    padding:11px 18px 9px;
+    cursor:pointer;
+    clip-path:polygon(6% 0, 94% 0, 100% 100%, 0% 100%);
+    transition:background .18s ease, color .18s ease, transform .18s ease;
+    position:relative;
+    top:1px;
+  }
+  .tab:hover{ color:var(--ink); }
+  .tab:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+  .tab[aria-selected="true"]{
+    background:var(--panel);
+    color:var(--ink);
+    font-weight:600;
+    transform:translateY(-2px);
+  }
+
+  /* ---------- folder body ---------- */
+  .folder{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:2px;
+    box-shadow:0 18px 40px -28px rgba(28,43,57,0.45);
+    padding:44px clamp(20px,5vw,56px) 8px;
+  }
+
+  .role-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:24px;
+    flex-wrap:wrap;
+    border-bottom:1px solid var(--line);
+    padding-bottom:26px;
+    margin-bottom:26px;
+  }
+  .role-title{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(22px,3.6vw,30px);
+    color:var(--teal);
+    margin:0 0 8px;
+  }
+  .role-tagline{
+    max-width:520px;
+    color:var(--ink-soft);
+    font-size:15.5px;
+    margin:0;
+  }
+
+  .stamp{
+    flex:0 0 auto;
+    width:118px; height:118px;
+    border:2px dashed var(--amber);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    transform:rotate(-9deg);
+    color:var(--amber);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    line-height:1.35;
+    padding:10px;
+    animation:stamp-in .5s cubic-bezier(.2,1.4,.4,1) both;
+    animation-delay:.15s;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .stamp{animation:none;}
+  }
+  @keyframes stamp-in{
+    from{ opacity:0; transform:rotate(-9deg) scale(1.5);}
+    to{ opacity:1; transform:rotate(-9deg) scale(1);}
+  }
+
+  /* ---------- stats ledger ---------- */
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-bottom:30px;
+  }
+  .stat{
+    padding:20px 18px;
+    border-left:1px solid var(--line);
+  }
+  .stat:first-child{border-left:none;}
+  .stat .value{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:clamp(20px,3.2vw,26px);
+    color:var(--ink);
+    display:block;
+  }
+  .stat .label{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    display:block;
+    margin-top:4px;
+  }
+  @media (max-width:600px){
+    .stats{grid-template-columns:1fr;}
+    .stat{border-left:none; border-top:1px solid var(--line);}
+    .stat:first-child{border-top:none;}
+  }
+
+  /* ---------- section labels ---------- */
+  .section-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--amber);
+    font-weight:600;
+    margin:0 0 16px;
+  }
+
+  /* ---------- experience ledger ---------- */
+  .xp{
+    display:grid;
+    grid-template-columns:130px 1fr;
+    gap:18px;
+    padding:20px 0;
+    border-top:1px solid var(--line);
+  }
+  .xp:first-of-type{border-top:none;}
+  .xp .period{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    padding-top:3px;
+  }
+  .xp .company{
+    font-weight:600;
+    font-size:16px;
+    margin:0 0 2px;
+  }
+  .xp .role{
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:13.5px;
+    margin:0 0 10px;
+  }
+  .xp ul{
+    margin:0;
+    padding-left:18px;
+  }
+  .xp li{
+    font-size:14.5px;
+    margin-bottom:6px;
+    color:var(--ink);
+  }
+  @media (max-width:560px){
+    .xp{grid-template-columns:1fr;}
+  }
+
+  /* ---------- skills chips ---------- */
+  .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:0 0 36px;
+  }
+  .chip{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--teal);
+    background:var(--teal-soft);
+    border:1px solid #c3ccd6;
+    padding:6px 12px;
+    border-radius:2px;
+  }
+
+  /* ---------- constant footer sections ---------- */
+  .divider-thick{
+    border:none;
+    border-top:2px solid var(--ink);
+    margin:8px 0 40px;
+  }
+  .grid2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    margin-bottom:44px;
+  }
+  @media (max-width:640px){
+    .grid2{grid-template-columns:1fr;}
+  }
+  .grid2 h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:18px;
+    margin:0 0 12px;
+  }
+  .plain-list{
+    list-style:none;
+    margin:0; padding:0;
+    font-size:14.5px;
+    color:var(--ink-soft);
+  }
+  .plain-list li{
+    padding:8px 0;
+    border-top:1px solid var(--line);
+  }
+  .plain-list li:first-child{border-top:none;}
+
+  footer{
+    text-align:center;
+    padding-top:40px;
+    color:var(--ink-soft);
+    font-size:13px;
+  }
+  footer .mono{ letter-spacing:.03em; }
+
+  /* fade for panel switch */
+  [role="tabpanel"]{
+    animation:fade-in .28s ease both;
+  }
+  @media (prefers-reduced-motion: reduce){
+    [role="tabpanel"]{animation:none;}
+  }
+  @keyframes fade-in{
+    from{opacity:0; transform:translateY(4px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <div>
+      <div class="kicker">Case File — Career Record</div>
+      <h1 class="name">Sri Meutia Ningsih</h1>
+    </div>
+    <div class="masthead-right">
+      Indonesia · Remote<br>
+      <a href="mailto:sri.meutia.ningsih13@gmail.com">sri.meutia.ningsih13@gmail.com</a><br>
+      <a href="tel:+6281333397906">+62 813 3339 7906</a><br>
+      <a href="https://www.linkedin.com/in/sri-meutia-ningsih13" target="_blank" rel="noopener">linkedin.com/in/sri-meutia-ningsih13</a>
+    </div>
+  </div>
+
+  <div class="tablist" role="tablist" aria-label="Choose a role lens">
+    <!-- tabs injected by JS -->
+  </div>
+
+  <main class="folder">
+    <div id="panel-root"></div>
+
+    <hr class="divider-thick">
+
+    <div class="grid2">
+      <div>
+        <h3>Sectors Worked In</h3>
+        <div class="chips">
+          <span class="chip">Government</span>
+          <span class="chip">Construction</span>
+          <span class="chip">Telecommunications</span>
+          <span class="chip">Property</span>
+          <span class="chip">Trading</span>
+          <span class="chip">Retail / FMCG</span>
+        </div>
+        <h3>Systems &amp; Software</h3>
+        <ul class="plain-list">
+          <li>Microsoft Excel, Word, Outlook, PowerPoint</li>
+          <li>Xero · Accurate · FINA</li>
+          <li>CRM Systems · Salesforce (basic)</li>
+          <li>Notion · Trello · Slack · Zoom · Teams</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Education &amp; Credentials</h3>
+        <ul class="plain-list">
+          <li>Master of Management (MM) — GPA 3.86</li>
+          <li>Bachelor of Accounting</li>
+          <li>Chartered Accountant (CA) · Internal Auditor</li>
+          <li>English — Professional Working Proficiency (TOEFL 507)</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer>
+      <p class="mono">20+ years · finance · audit · project operations · remote-ready</p>
+    </footer>
+  </main>
+
+</div>
+
+<script>
+const PROFILES = [
+  {
+    id: "ea",
+    tabLabel: "Executive & Admin",
+    roleTitle: "Administrative Assistant / Executive Assistant",
+    tagline: "Keeps leadership's calendar, documents, and communication running without gaps — across government, telecom, and construction settings.",
+    stamp: "50+ SOPs Built & Deployed",
+    stats: [
+      { value: "100%", label: "reporting deadlines met across 10–15 projects/yr" },
+      { value: "30%", label: "fewer missing or delayed documents" },
+      { value: "3 yrs", label: "managing an executive's calendar & travel" },
+    ],
+    experience: [
+      {
+        company: "Inspectorate of Sungai Penuh City Government",
+        role: "Senior Internal Auditor / Project Operations & Compliance Support",
+        period: "Feb 2014 – Present",
+        bullets: [
+          "Coordinated documentation, scheduling, and communication for 10–15 concurrent audit projects each year",
+          "Prepared project status reports and executive summaries used by leadership for decision-making",
+          "Kept records, approvals, and correspondence organized, cutting missing/delayed documents by about 30%",
+        ]
+      },
+      {
+        company: "PT. GTL Indonesia",
+        role: "Finance & Accounting Assistant Manager (also covering Executive Support)",
+        period: "Jul 2009 – Jul 2012",
+        bullets: [
+          "Managed the calendar, meetings, business travel, and accommodation for a foreign-owned telecom company's leadership",
+          "Prepared meeting agendas, documented outcomes, and tracked action items",
+          "Put together presentations, reports, and business correspondence for management",
+        ]
+      },
+      {
+        company: "Frist Karya Corp",
+        role: "Head of Accounting, Finance & Business Operations (also covering HR & Admin)",
+        period: "Sep 2012 – Mar 2014",
+        bullets: [
+          "Recruited, trained, and supervised 7 finance, cashier, and admin staff",
+          "Handled payroll, attendance, and employee records for the parent company and 2 subsidiaries",
+          "Introduced new admin procedures that sped up operations and strengthened internal controls",
+        ]
+      },
+    ],
+    skills: ["Scheduling & Calendar Mgmt", "Document & Contract Control", "Stakeholder Communication", "Meeting Coordination", "Google Workspace", "MS Office"]
+  },
+  {
+    id: "pm",
+    tabLabel: "Project / Ops",
+    roleTitle: "Project Manager / Operations Manager",
+    tagline: "Runs several projects at once, keeps budgets and contractors in line, and reports up without surprises.",
+    stamp: "225% of Target Reached",
+    stats: [
+      { value: "10–15", label: "concurrent projects coordinated per year" },
+      { value: "IDR 15B+", label: "in procurement & construction reviewed annually" },
+      { value: "225%", label: "of goal on an international lead-gen project" },
+    ],
+    experience: [
+      {
+        company: "Inspectorate of Sungai Penuh City Government",
+        role: "Senior Internal Auditor / Project Operations & Compliance Support",
+        period: "Feb 2014 – Present",
+        bullets: [
+          "Coordinated 10–15 concurrent audit and field projects each year, end to end",
+          "Tracked milestones, schedules, and corrective action plans, hitting 100% reporting deadline compliance",
+          "Took part in audits of 5+ infrastructure and construction projects a year",
+        ]
+      },
+      {
+        company: "Naturanexa Company",
+        role: "Lead Generation Project Team — SGBVA Singapore International Internship",
+        period: "Mar 2025 – Apr 2025",
+        bullets: [
+          "Beat the project target by 225%, generating 45+ qualified leads in one month",
+          "Coordinated daily activities within a cross-functional virtual team spread across countries",
+          "Tracked project KPIs, lead conversion progress, and outreach activities",
+        ]
+      },
+      {
+        company: "Frist Karya Corp",
+        role: "Head of Accounting, Finance & Business Operations",
+        period: "Sep 2012 – Mar 2014",
+        bullets: [
+          "Oversaw finance, procurement, payroll, and inventory for the parent company and 2 subsidiaries",
+          "Supported execution of several construction projects through budget and contractor coordination",
+          "Contributed to roughly 50% growth in new customers through better service and stakeholder coordination",
+        ]
+      },
+    ],
+    skills: ["Project Coordination", "Vendor & Contractor Mgmt", "Budget Control", "Risk Management", "SOP Development", "Notion / Trello"]
+  },
+  {
+    id: "fin",
+    tabLabel: "Finance",
+    roleTitle: "Finance Manager",
+    tagline: "Owns reporting, cash flow, and compliance end to end, and has led finance teams through system changes without losing accuracy.",
+    stamp: "20+ Yrs in Finance & Audit",
+    stats: [
+      { value: "IDR 15B+", label: "in financial & procurement reviews annually" },
+      { value: "120%", label: "of 2011 revenue target reached" },
+      { value: "45→89%", label: "compliance score raised in two years" },
+    ],
+    experience: [
+      {
+        company: "PT. GTL Indonesia",
+        role: "Finance & Accounting Assistant Manager",
+        period: "Jul 2009 – Jul 2012",
+        bullets: [
+          "Ran daily finance operations: receivables, payables, cash flow, tax, and financial reporting",
+          "Led month-end and year-end closing, keeping reporting accurate and on time",
+          "Helped exceed 120% of the 2011 revenue target through stronger receivables management",
+        ]
+      },
+      {
+        company: "Frist Karya Corp",
+        role: "Head of Accounting, Finance & Business Operations",
+        period: "Sep 2012 – Mar 2014",
+        bullets: [
+          "Led all finance and accounting functions for the parent company and 2 subsidiaries",
+          "Rolled out a new accounting system within 3 months, improving accuracy and control",
+          "Restored credibility with 2 banks and 3 major suppliers by resolving outstanding liabilities",
+        ]
+      },
+      {
+        company: "Inspectorate of Sungai Penuh City Government",
+        role: "Senior Internal Auditor",
+        period: "Feb 2014 – Present",
+        bullets: [
+          "Audited 20+ government programs and projects annually",
+          "Reviewed procurement, supplier, and contractor deals exceeding IDR 15 billion annually",
+          "Raised the anti-corruption compliance score from 45% to 89% in two years",
+        ]
+      },
+    ],
+    skills: ["Financial Reporting", "Cash Flow & Budgeting", "Tax (VAT)", "Bank Reconciliation", "Internal Audit", "Xero / Accurate / FINA"]
+  },
+  {
+    id: "lead",
+    tabLabel: "Lead Generation",
+    roleTitle: "Lead Generation Specialist",
+    tagline: "Turns market research and outreach into a steady, well-documented pipeline of qualified leads.",
+    stamp: "45+ Leads in 1 Month",
+    stats: [
+      { value: "225%", label: "of target reached on an international project" },
+      { value: "120+", label: "qualified prospects generated per month" },
+      { value: "98%", label: "positive customer engagement rate" },
+    ],
+    experience: [
+      {
+        company: "Naturanexa Company",
+        role: "Lead Generation Project Team — SGBVA Singapore International Internship",
+        period: "Mar 2025 – Apr 2025",
+        bullets: [
+          "Beat the project target by generating 45+ qualified leads (225% of goal) within one month",
+          "Conducted market research and prospect identification in the timber industry",
+          "Managed and validated the lead database, improving accuracy and follow-up efficiency",
+        ]
+      },
+      {
+        company: "PT Orindo Alam Ayu (Oriflame)",
+        role: "Digital Marketing & Customer Engagement Specialist",
+        period: "May 2016 – Sep 2018",
+        bullets: [
+          "Planned and ran social campaigns generating 120+ qualified prospects per month",
+          "Grew campaign reach by more than 50% through influencer and community partnerships",
+          "Maintained a 98% positive customer engagement rate by replying quickly to every inquiry",
+        ]
+      },
+    ],
+    skills: ["Market Research", "Prospecting", "Lead Database Mgmt", "CRM Systems", "Salesforce (basic)", "KPI Reporting"]
+  },
+  {
+    id: "content",
+    tabLabel: "Content Writing",
+    roleTitle: "Content Writing Specialist",
+    tagline: "Plans a content calendar, writes the copy, and reads the numbers to know what to write next.",
+    stamp: "300+ Pieces Produced",
+    stats: [
+      { value: "300+", label: "pieces of marketing content produced" },
+      { value: "50%+", label: "growth in campaign reach" },
+      { value: "98%", label: "positive customer engagement rate" },
+    ],
+    experience: [
+      {
+        company: "PT Orindo Alam Ayu (Oriflame)",
+        role: "Digital Marketing & Customer Engagement Specialist",
+        period: "May 2016 – Sep 2018",
+        bullets: [
+          "Built content calendars and managed end-to-end content production: graphics, posts, video, testimonials",
+          "Produced 300+ pieces of marketing content across formats to support sales campaigns",
+          "Wrote product education content and promo copy that generated 120+ prospects per month",
+        ]
+      },
+      {
+        company: "Naturanexa Company",
+        role: "Lead Generation Project Team — SGBVA Singapore International Internship",
+        period: "Mar 2025 – Apr 2025",
+        bullets: [
+          "Helped build outreach scripts and business communication material for campaigns",
+          "Produced periodic project performance reports used for campaign evaluation",
+        ]
+      },
+    ],
+    skills: ["Content Calendars", "Copywriting", "Basic SEO", "Social Media Analytics", "Audience Research"]
+  },
+];
+
+const tablist = document.querySelector('.tablist');
+const panelRoot = document.getElementById('panel-root');
+
+function renderTabs(activeId){
+  tablist.innerHTML = PROFILES.map(p => `
+    <button class="tab" role="tab"
+      id="tab-${p.id}"
+      aria-selected="${p.id === activeId}"
+      aria-controls="panel-${p.id}"
+      data-id="${p.id}">${p.tabLabel}</button>
+  `).join('');
+  tablist.querySelectorAll('.tab').forEach(btn => {
+    btn.addEventListener('click', () => renderPanel(btn.dataset.id));
+  });
+}
+
+function renderPanel(id){
+  const p = PROFILES.find(x => x.id === id);
+  renderTabs(id);
+
+  panelRoot.innerHTML = `
+    <div role="tabpanel" id="panel-${p.id}" aria-labelledby="tab-${p.id}">
+      <div class="role-row">
+        <div>
+          <p class="role-title">${p.roleTitle}</p>
+          <p class="role-tagline">${p.tagline}</p>
+        </div>
+        <div class="stamp">${p.stamp}</div>
+      </div>
+
+      <div class="stats">
+        ${p.stats.map(s => `
+          <div class="stat">
+            <span class="value mono">${s.value}</span>
+            <span class="label">${s.label}</span>
+          </div>
+        `).join('')}
+      </div>
+
+      <p class="section-label">Relevant Experience</p>
+      ${p.experience.map(x => `
+        <div class="xp">
+          <div class="period">${x.period}</div>
+          <div>
+            <p class="company">${x.company}</p>
+            <p class="role">${x.role}</p>
+            <ul>${x.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
+          </div>
+        </div>
+      `).join('')}
+
+      <p class="section-label" style="margin-top:8px;">Core Skills</p>
+      <div class="chips">
+        ${p.skills.map(s => `<span class="chip">${s}</span>`).join('')}
+      </div>
+    </div>
+  `;
+}
+
+renderPanel(PROFILES[0].id);
+</script>
+
+</body>
+</html>
