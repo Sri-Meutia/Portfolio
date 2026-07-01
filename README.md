@@ -25,4 +25,5 @@ Visit my portfolio here:
 
 ## Contact
 LinkedIn: https://www.linkedin.com/in/sri-meutia-ningsih13
+
 Email: sri.meutia.ningsih13@gmail.com 
